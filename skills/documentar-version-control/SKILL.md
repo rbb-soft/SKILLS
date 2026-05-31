@@ -171,7 +171,7 @@ Si el `README.md` no tiene ninguna de estas secciones → no modificarlo.
 ### Regla adicional: Referencias cruzadas manifest ↔ documentación
 
 1. **Identificar archivos "manifest"** en el diff: archivos que listan componentes/dependencias
-   - `.skill-lock.json`, `package.json`, `requirements.txt`, `go.mod`, `Cargo.toml`, `*.lock`, `Gemfile`, `composer.json`
+   - `package.json`, `requirements.txt`, `go.mod`, `Cargo.toml`, `*.lock`, `Gemfile`, `composer.json`
    - Cualquier `.json` o archivo de lock en la raíz o subdirectorios comunes
 
 2. **Para cada nombre de componente nuevo o modificado en el manifest:**
@@ -204,7 +204,7 @@ Esta regla detecta trees ASCII en archivos `.md` y los mantiene sincronizados co
 **1. Detectar blocks tree en archivos `.md`:**
 - Buscar patrones: `├──`, `└──`, `│   ├──`, `│   └──`
 - El tree puede estar en un bloque de código markdown (```) o en texto plano
-- Identificar la ruta base que representa el tree (ej: `skills/` o el directorio padre del `.md`)
+- Identificar la ruta base que representa el tree (directorio padre del `.md` o el que indique el contexto)
 
 **2. Comparar tree vs estructura real:**
 - Para cada item en el tree, verificar si el directorio existe realmente
@@ -222,11 +222,10 @@ Esta regla detecta trees ASCII en archivos `.md` y los mantiene sincronizados co
 
 | Formato | Ejemplo | Acción |
 |---------|---------|--------|
-| Tree intermedio | `├── find-skills/` | ✅ detectar y preservar |
-| Tree final | `└── documentar-version-control/` | ✅ detectar y preservar |
-| Con descripción | `├── skill-creator/  # crear skills` | ✅ preservar descripción |
-| Nombres desnormalized | `├── find-skills/` | ✅ normalizar a lowercase si el dir existe así |
-| Comentarios inline | `├── seo/ #搜索引擎优化` | ✅ preservar |
+| Tree intermedio | `├── <nombre>/` | ✅ detectar y preservar |
+| Tree final | `└── <nombre>/` | ✅ detectar y preservar |
+| Con descripción | `├── <nombre>/  # descripción` | ✅ preservar descripción |
+| Comentarios inline | `├── <nombre>/ # nota` | ✅ preservar |
 
 **5. Condiciones para modificar:**
 - El tree tiene items faltantes u obsoletos respecto a la estructura real
@@ -235,20 +234,20 @@ Esta regla detecta trees ASCII en archivos `.md` y los mantiene sincronizados co
 
 **Ejemplo de sync automático:**
 ```
-# BEFORE (README.md tree desactualizado):
-skills/
-├── find-skills/
-├── frontend-design/
-└── seo/
+# BEFORE (tree desactualizado):
+<directorio>/
+├── modulo-a/
+├── modulo-b/
+└── modulo-c/
 
-# AFTER (después de ejecutar el skill, porque existen:
-#   skills/minimax-helper/ y skills/php-api-skeleton/):
-skills/
-├── find-skills/
-├── frontend-design/
-├── minimax-helper/
-├── php-api-skeleton/
-└── seo/
+# AFTER (después de ejecutar el skill, porque existen
+#   <directorio>/modulo-d/ y <directorio>/modulo-e/):
+<directorio>/
+├── modulo-a/
+├── modulo-b/
+├── modulo-d/
+├── modulo-e/
+└── modulo-c/
 ```
 
 ### Regla para otros *.md
