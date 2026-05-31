@@ -14,8 +14,9 @@ This is a **Claude Code skill registry** — a manifest of installed agent capab
 | Skill | Source |
 |-------|--------|
 | find-skills | vercel-labs/skills |
-| frontend-design | bytedance/deer-flow |
+| frontend-design | anthropics/skills |
 | nielsen-usability-heuristics | dembrandt/dembrandt-skills |
+| php-api-skeleton | local |
 | seo | addyosmani/web-quality-skills |
 | vps-checkup | jmerta/codex-skills |
 
