@@ -5,12 +5,14 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
 
 ---
 
-## [v0.4.0] — 2026-05-31
+## [v0.5.0] — 2026-05-31
 
 ### Added
-- Skill `web-design-guidelines` instalado y registrado en `.skill-lock.json`
+- Skill `skill-creator` instalado y registrado en `.skill-lock.json`
 
 ---
+
+## [v0.4.0] — 2026-05-31
 
 ## [v0.3.1] — 2026-05-31
 
