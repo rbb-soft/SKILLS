@@ -65,7 +65,8 @@ find . -name "*.md" \
 |-----------|--------|
 | Existe `CHANGELOG.md` | Siempre actualizar con la nueva entrada al tope |
 | **No existe `CHANGELOG.md`** | **Crearlo desde cero** con la primera entrada (ver formato más abajo) |
-| Existe un `README.md` con sección `## Versión` o `## Estado` | Actualizar esa sección con la versión nueva |
+| Existe `README.md` con sección `## Versión` o `## Estado` | Actualizar esa sección con la versión nueva |
+| **No existe `README.md`** | **Crearlo desde cero** con la estructura mínima (ver formato más abajo) |
 | Hay un `.md` específico del módulo modificado | Revisar si necesita actualización |
 
 **Nunca modificar:**
@@ -126,6 +127,46 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
 ```
 
 La primera versión siempre es `v0.1.0` salvo que el usuario indique otra.
+
+### Crear README.md desde cero
+
+Si no existe `README.md` en el proyecto, crearlo en la raíz con esta estructura, inferiendo el contenido del nombre del repositorio y los archivos presentes:
+
+```markdown
+# <nombre del repositorio>
+
+<Descripción breve inferida del proyecto — 1 o 2 líneas>
+
+## Instalación
+
+> _Completar con los pasos de instalación._
+
+## Uso
+
+> _Completar con ejemplos de uso._
+
+## Versión
+
+vX.Y.Z
+```
+
+- El título se toma del nombre del directorio raíz del repo (o del `name` en `package.json` / `pyproject.toml` si existe).
+- La descripción se infiere del diff y los archivos del proyecto; si no hay suficiente contexto, dejar un placeholder claro.
+- La versión debe coincidir con la entrada recién creada en `CHANGELOG.md`.
+
+### Regla para README.md existente
+
+Buscar en el `README.md` si existe alguna de estas secciones y actualizarla:
+
+| Sección en README.md | Qué actualizar |
+|----------------------|----------------|
+| `## Versión` o `## Version` | Cambiar el número de versión al nuevo |
+| `## Estado` o `## Status` | Actualizar el estado del proyecto si cambió |
+| `## Instalación` o `## Uso` | Actualizar si el diff modifica comandos, flags o pasos documentados |
+| `## Changelog` (inline) | Agregar entrada igual que en CHANGELOG.md |
+
+Si el `README.md` no tiene ninguna de estas secciones → no modificarlo.
+**No reescribir todo el archivo**, solo la sección relevante.
 
 ### Regla para otros *.md
 
