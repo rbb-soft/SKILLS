@@ -195,6 +195,62 @@ Si el `README.md` no tiene ninguna de estas secciones → no modificarlo.
    - El item aparece en el diff del manifest Y
    - La sección es un listing enumerativo (no descripción prose)
 
+### Regla para sincronizar ASCII trees con estructura de archivos
+
+Esta regla detecta trees ASCII en archivos `.md` y los mantiene sincronizados con la estructura real de directorios del proyecto.
+
+**Trigger:** Se ejecuta siempre como paso adicional en "Paso 2 — Analizar qué *.md actualizar", sin necesidad de que el diff toque un manifest.
+
+**1. Detectar blocks tree en archivos `.md`:**
+- Buscar patrones: `├──`, `└──`, `│   ├──`, `│   └──`
+- El tree puede estar en un bloque de código markdown (```) o en texto plano
+- Identificar la ruta base que representa el tree (ej: `skills/` o el directorio padre del `.md`)
+
+**2. Comparar tree vs estructura real:**
+- Para cada item en el tree, verificar si el directorio existe realmente
+- Detectar:
+  - **Items faltantes**: directorios que existen en el filesystem pero no están en el tree
+  - **Items obsoletos**: items en el tree cuyo directorio ya no existe
+
+**3. Actualización del tree:**
+- Agregar items faltantes en posición alfabética, manteniendo el formato (`├──` para items intermedios, `└──` para el último)
+- Eliminar items obsoletos
+- Preservar comentarios después del nombre (ej: `# desc` al final de la línea)
+- Mantener indentación de 4 espacios por nivel
+
+**4. Formatos a detectar y preservar:**
+
+| Formato | Ejemplo | Acción |
+|---------|---------|--------|
+| Tree intermedio | `├── find-skills/` | ✅ detectar y preservar |
+| Tree final | `└── documentar-version-control/` | ✅ detectar y preservar |
+| Con descripción | `├── skill-creator/  # crear skills` | ✅ preservar descripción |
+| Nombres desnormalized | `├── find-skills/` | ✅ normalizar a lowercase si el dir existe así |
+| Comentarios inline | `├── seo/ #搜索引擎优化` | ✅ preservar |
+
+**5. Condiciones para modificar:**
+- El tree tiene items faltantes u obsoletos respecto a la estructura real
+- El bloque usa formato tree reconocible (no prose ni bullets simples sin `├──`/`└──`)
+- El tree vive en un archivo `.md` que no sea de un submodule externo
+
+**Ejemplo de sync automático:**
+```
+# BEFORE (README.md tree desactualizado):
+skills/
+├── find-skills/
+├── frontend-design/
+└── seo/
+
+# AFTER (después de ejecutar el skill, porque existen:
+#   skills/minimax-helper/ y skills/php-api-skeleton/):
+skills/
+├── find-skills/
+├── frontend-design/
+├── minimax-helper/
+├── php-api-skeleton/
+└── seo/
+```
+
 ### Regla para otros *.md
 
 Buscar en el diff si el cambio afecta funcionalidad documentada en otros `.md`.
