@@ -5,6 +5,13 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
 
 ---
 
+## [v0.6.1] — 2026-05-31
+
+### Added
+- Regla genérica de referencias cruzadas manifest ↔ documentación en `documentar-version-control`: ahora detecta cuando un componente nuevo en un manifest (`.skill-lock.json`, `package.json`, etc.) falta en lists/trees de archivos `.md` y lo inserta automáticamente
+
+---
+
 ## [v0.6.0] — 2026-05-31
 
 ### Added

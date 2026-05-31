@@ -168,6 +168,33 @@ Buscar en el `README.md` si existe alguna de estas secciones y actualizarla:
 Si el `README.md` no tiene ninguna de estas secciones → no modificarlo.
 **No reescribir todo el archivo**, solo la sección relevante.
 
+### Regla adicional: Referencias cruzadas manifest ↔ documentación
+
+1. **Identificar archivos "manifest"** en el diff: archivos que listan componentes/dependencias
+   - `.skill-lock.json`, `package.json`, `requirements.txt`, `go.mod`, `Cargo.toml`, `*.lock`, `Gemfile`, `composer.json`
+   - Cualquier `.json` o archivo de lock en la raíz o subdirectorios comunes
+
+2. **Para cada nombre de componente nuevo o modificado en el manifest:**
+   a. Extraer el identificador (ej: `skill-creator`, `my-package`, `module-name`)
+   b. Buscar en todos los `.md` del proyecto si ese identificador aparece
+   c. Si aparece en una sección de lista/árbol pero no está documentado correctamente:
+      - Detectar el formato de la lista (tree `├──`, bullets `-`, tabla, etc.)
+      - Insertar el nuevo componente en la posición correcta
+      - Mantener el formato existente
+
+3. **Patrones a detectar:**
+   | Pattern | Qué hacer |
+   |---------|-----------|
+   | Tree style `├── name/` | Agregar nuevo item manteniendo indentación y format |
+   | Bullet list `- name` | Agregar nuevo item con `- ` prefix |
+   | Tabla con columna de nombres | Agregar row manteniendo alignment |
+   | Section con nombre como header | No modificar (es documentación, no listing) |
+
+4. **Solo modificar si:**
+   - El item está faltando Y
+   - El item aparece en el diff del manifest Y
+   - La sección es un listing enumerativo (no descripción prose)
+
 ### Regla para otros *.md
 
 Buscar en el diff si el cambio afecta funcionalidad documentada en otros `.md`.
