@@ -5,6 +5,13 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
 
 ---
 
+## [v0.6.0] — 2026-05-31
+
+### Added
+- Symlinks agregados para skills que apuntan a la instalación centralizada en `~/.agents/skills/` (`frontend-design`, `skill-creator`, `web-design-guidelines`)
+
+---
+
 ## [v0.5.0] — 2026-05-31
 
 ### Added
