@@ -45,6 +45,15 @@
       "skillFolderHash": "d10e00602a26f772516b0e1a48306e8cfdd9962f",
       "installedAt": "2026-05-30T19:49:15.503Z",
       "updatedAt": "2026-05-30T19:49:15.503Z"
+    },
+    "documentar-version-control": {
+      "source": "local",
+      "sourceType": "local",
+      "sourceUrl": null,
+      "skillPath": "skills/documentar-version-control/SKILL.md",
+      "skillFolderHash": "dfc7893fd3a9321bd3e5e1a7bf4c7f8c9a2b5d4e",
+      "installedAt": "2026-05-31T12:59:00.000Z",
+      "updatedAt": "2026-05-31T13:13:00.000Z"
     }
   },
   "dismissed": {
