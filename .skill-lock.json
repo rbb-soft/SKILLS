@@ -1,0 +1,70 @@
+{
+  "version": 3,
+  "skills": {
+    "find-skills": {
+      "source": "vercel-labs/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/vercel-labs/skills.git",
+      "skillPath": "skills/find-skills/SKILL.md",
+      "skillFolderHash": "3013fdeb8a11b10b1eb795ec3ae8bfca38f7c26d",
+      "installedAt": "2026-05-29T01:44:25.770Z",
+      "updatedAt": "2026-05-29T01:44:25.770Z"
+    },
+    "frontend-design": {
+      "source": "bytedance/deer-flow",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/bytedance/deer-flow.git",
+      "skillPath": "skills/public/frontend-design/SKILL.md",
+      "skillFolderHash": "59dbde5aa33a8b6e535d9356ba736c4d11a601c3",
+      "installedAt": "2026-05-29T23:37:15.763Z",
+      "updatedAt": "2026-05-29T23:37:26.720Z"
+    },
+    "nielsen-usability-heuristics": {
+      "source": "dembrandt/dembrandt-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/dembrandt/dembrandt-skills.git",
+      "skillPath": "skills/nielsen-usability-heuristics/SKILL.md",
+      "skillFolderHash": "cf1ea6c63b0636c173ad9c2767df2d672d454650",
+      "installedAt": "2026-05-30T00:08:06.599Z",
+      "updatedAt": "2026-05-30T00:08:06.599Z"
+    },
+    "seo": {
+      "source": "addyosmani/web-quality-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/addyosmani/web-quality-skills.git",
+      "skillPath": "skills/seo/SKILL.md",
+      "skillFolderHash": "2bef4cf1f39eec98ab6e3d2bf8ffb47619d50b6b",
+      "installedAt": "2026-05-30T15:32:26.177Z",
+      "updatedAt": "2026-05-30T15:32:26.177Z"
+    },
+    "vps-checkup": {
+      "source": "jmerta/codex-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/jmerta/codex-skills.git",
+      "skillPath": "vps-checkup/SKILL.md",
+      "skillFolderHash": "d10e00602a26f772516b0e1a48306e8cfdd9962f",
+      "installedAt": "2026-05-30T19:49:15.503Z",
+      "updatedAt": "2026-05-30T19:49:15.503Z"
+    }
+  },
+  "dismissed": {
+    "findSkillsPrompt": true
+  },
+  "lastSelectedAgents": [
+    "amp",
+    "antigravity",
+    "cline",
+    "codex",
+    "cursor",
+    "deepagents",
+    "dexto",
+    "firebender",
+    "gemini-cli",
+    "github-copilot",
+    "kimi-cli",
+    "opencode",
+    "warp",
+    "zed",
+    "claude-code"
+  ]
+}
