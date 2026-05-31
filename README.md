@@ -15,6 +15,7 @@ skills/
 ├── nielsen-usability-heuristics/  # Evaluación de usabilidad
 ├── seo/                      # Optimización para buscadores
 ├── vps-checkup/              # Health check de VPS Ubuntu/Docker
+├── web-design-guidelines/    # Revisión de diseño web y accesibilidad
 └── documentar-version-control/   # Documentación automática y versionado
 ```
 
@@ -32,4 +33,4 @@ Los skills se instalan via el comando `/skills` o creando manualmente un subdire
 
 ## Versión
 
-v0.3.1
+v0.4.0

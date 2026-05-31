@@ -55,6 +55,15 @@
       "skillFolderHash": "dfc7893fd3a9321bd3e5e1a7bf4c7f8c9a2b5d4e",
       "installedAt": "2026-05-31T12:59:00.000Z",
       "updatedAt": "2026-05-31T13:13:00.000Z"
+    },
+    "web-design-guidelines": {
+      "source": "vercel-labs/agent-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/vercel-labs/agent-skills.git",
+      "skillPath": "skills/web-design-guidelines/SKILL.md",
+      "skillFolderHash": "3116f3e62dbd02b44a598b1aa690d2a8938e8f89",
+      "installedAt": "2026-05-31T20:30:01.902Z",
+      "updatedAt": "2026-05-31T20:30:01.902Z"
     }
   },
   "dismissed": {
