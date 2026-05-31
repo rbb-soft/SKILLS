@@ -5,6 +5,17 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
 
 ---
 
+## [v0.3.1] — 2026-05-31
+
+### Changed
+- Skill `frontend-design` actualizado a nuevo source: `anthropics/skills`
+- Documentación de `frontend-design` simplificada: removidos requisitos de branding y output requirements
+
+### Removed
+- Eliminado symlink `skills/frontend-design/frontend-design`
+
+---
+
 ## [v0.3.0] — 2026-05-31
 
 ### Added

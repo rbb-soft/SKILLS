@@ -11,13 +11,14 @@
       "updatedAt": "2026-05-29T01:44:25.770Z"
     },
     "frontend-design": {
-      "source": "bytedance/deer-flow",
+      "source": "anthropics/skills",
       "sourceType": "github",
-      "sourceUrl": "https://github.com/bytedance/deer-flow.git",
-      "skillPath": "skills/public/frontend-design/SKILL.md",
-      "skillFolderHash": "59dbde5aa33a8b6e535d9356ba736c4d11a601c3",
+      "sourceUrl": "https://github.com/anthropics/skills.git",
+      "skillPath": "skills/frontend-design/SKILL.md",
+      "skillFolderHash": "928950704df8a8b885c03de5da626331e6f29cf8",
+      "pluginName": "example-skills",
       "installedAt": "2026-05-29T23:37:15.763Z",
-      "updatedAt": "2026-05-29T23:37:26.720Z"
+      "updatedAt": "2026-05-31T20:27:15.461Z"
     },
     "nielsen-usability-heuristics": {
       "source": "dembrandt/dembrandt-skills",
