@@ -15,6 +15,7 @@ skills/
 ├── frontend-design/          # Diseño de interfaces frontend
 ├── minimax-helper/           # Helper para agente MiniMax
 ├── nielsen-usability-heuristics/  # Evaluación de usabilidad
+├── pdf-extraction/           # Extracción de texto y tablas de PDFs
 ├── php-api-skeleton/         # API REST PHP con JWT, router y database
 ├── seo/                      # Optimización para buscadores
 ├── skill-creator/            # Crear y validar nuevos skills
@@ -36,4 +37,4 @@ Los skills se instalan via el comando `/skills` o creando manualmente un subdire
 
 ## Versión
 
-v0.6.1
+v0.7.0

@@ -22,9 +22,12 @@ Documenta automáticamente los cambios de un proyecto revisando `git diff`, actu
 1. Detectar cambios con git
 2. Analizar qué archivos *.md corresponde actualizar
 3. Actualizar los *.md según las reglas de documentación (crear CHANGELOG.md si no existe)
+3b. SINCRONIZAR todos los ASCII trees en archivos *.md con la estructura real de directorios
 4. git add → git commit → git pull --rebase → git push
 5. Mostrar resumen final al usuario con lo que se hizo
 ```
+
+> ⚠️ **El paso 3b es OBLIGATORIO en cada corrida.** No depende de que el diff toque directorios específicos — debe verificar TODOS los trees en TODOS los archivos `.md` del proyecto.
 
 ---
 
@@ -197,9 +200,7 @@ Si el `README.md` no tiene ninguna de estas secciones → no modificarlo.
 
 ### Regla para sincronizar ASCII trees con estructura de archivos
 
-Esta regla detecta trees ASCII en archivos `.md` y los mantiene sincronizados con la estructura real de directorios del proyecto.
-
-**Trigger:** Se ejecuta siempre como paso adicional en "Paso 2 — Analizar qué *.md actualizar", sin necesidad de que el diff toque un manifest.
+**⚠️ IMPORTANTE: Esta regla se ejecuta SIEMPRE en cada corrida del skill, sin excepciones.** No depende del diff ni de qué archivos se modificaron. Debe verificar y sincronizar TODOS los trees ASCII encontrados en archivos `.md` del proyecto.
 
 **1. Detectar blocks tree en archivos `.md`:**
 - Buscar patrones: `├──`, `└──`, `│   ├──`, `│   └──`
@@ -228,9 +229,11 @@ Esta regla detecta trees ASCII en archivos `.md` y los mantiene sincronizados co
 | Comentarios inline | `├── <nombre>/ # nota` | ✅ preservar |
 
 **5. Condiciones para modificar:**
-- El tree tiene items faltantes u obsoletos respecto a la estructura real
-- El bloque usa formato tree reconocible (no prose ni bullets simples sin `├──`/`└──`)
-- El tree vive en un archivo `.md` que no sea de un submodule externo
+- El bloque existe en un archivo `.md` Y contiene patterns de tree reconocibles (`├──`, `└──`)
+- El tree no está ya sincronizado con la estructura real de directorios (hay items faltantes u obsoletos)
+- Si el tree YA está sincronizado → no hacer nada en ese bloque
+
+> El solo hecho de que exista un tree en un `.md` NO significa que hay que modificarlo. Solo se modifica si está desincronizado respecto al filesystem real.
 
 **Ejemplo de sync automático:**
 ```
