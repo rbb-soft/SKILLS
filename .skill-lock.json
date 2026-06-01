@@ -74,6 +74,15 @@
       "pluginName": "example-skills",
       "installedAt": "2026-05-31T20:32:16.610Z",
       "updatedAt": "2026-05-31T20:32:16.610Z"
+    },
+    "pdf-extraction": {
+      "source": "claude-office-skills/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/claude-office-skills/skills.git",
+      "skillPath": "pdf-extraction/SKILL.md",
+      "skillFolderHash": "a9e1372465393214557768f2ca1dccf2c8d2fa36",
+      "installedAt": "2026-06-01T13:00:53.799Z",
+      "updatedAt": "2026-06-01T13:00:53.799Z"
     }
   },
   "dismissed": {

@@ -5,6 +5,13 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
 
 ---
 
+## [v0.7.0] — 2026-06-01
+
+### Added
+- Skill `pdf-extraction` instalado para extracción de texto, tablas y metadata de PDFs
+
+---
+
 ## [v0.6.1] — 2026-05-31
 
 ### Added
