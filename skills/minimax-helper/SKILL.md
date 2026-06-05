@@ -2,9 +2,11 @@
 name: minimax-helper
 description: >
   Augment Claude with MiniMax capabilities — image understanding, web search,
-  and text generation. Use when the user asks to analyze an image, search the
-  web for current information, generate text with MiniMax models, or upload
-  files as context. Wraps the `mmx` CLI (MiniMax v1.0.15+).
+  text generation, speech synthesis, image/video/music generation, file
+  upload, and quota inspection. Use when the user asks to analyze an image,
+  search the web for current information, generate text or media with
+  MiniMax models, upload files as context, check usage quotas, or update the
+  CLI. Wraps the `mmx` CLI (MiniMax v1.0.16+).
 ---
 
 # MiniMax Helper Skill
@@ -19,6 +21,12 @@ Invoke this skill when the task involves any of:
   fact-checking, recent news, live data
 - **Text generation**: drafting content, code generation, translation, summarization
   using MiniMax models as an alternative or complement to Claude
+- **Speech synthesis**: generating audio/voice from text (`mmx speech synthesize`)
+- **Image generation**: creating images from a text prompt (`mmx image generate`)
+- **Video generation**: creating short videos from a prompt (`mmx video generate`)
+- **Music generation**: creating music or covers (`mmx music generate`)
+- **Quota check**: the user wants to know their remaining usage (`mmx quota show`)
+- **CLI update**: the user wants to upgrade `mmx` to the latest version (`mmx update`)
 - **File upload**: sending local files (images, documents) to MiniMax storage for
   use as context in subsequent vision or chat calls
 
@@ -28,7 +36,7 @@ Invoke this skill when the task involves any of:
 
 ### CLI Location
 
-The `mmx` CLI must be installed and accessible. Default path:
+The `mmx` CLI must be installed and accessible. Default path (pnpm global):
 
 ```
 /home/richard/.local/share/pnpm/bin/mmx
@@ -42,12 +50,17 @@ mmx --version
 /home/richard/.local/share/pnpm/bin/mmx --version
 ```
 
-If not found, install with:
+If not found, install with pnpm (the package may live on a private registry):
 
 ```bash
-npm install -g @minimax/mmx
-# or
 pnpm add -g @minimax/mmx
+```
+
+To update an existing install to the latest version, prefer the built-in
+updater over reinstalling:
+
+```bash
+mmx update
 ```
 
 ### Authentication
@@ -69,12 +82,21 @@ Expected output when authenticated:
 ```json
 {
   "authenticated": true,
-  "user": { "email": "...", "id": "..." }
+  "user": { "email": "...", "id": "..." },
+  "quota": { ... }
 }
 ```
 
+`auth status` now also returns a quota snapshot — useful for showing the
+user their remaining capacity before a large generation.
+
 If `authenticated` is `false` or the command errors, stop and tell the user:
 > "MiniMax is not authenticated. Please run `mmx auth login` in your terminal."
+
+Other auth subcommands:
+
+- `mmx auth refresh` — manually refresh an OAuth token
+- `mmx auth logout` — revoke tokens and clear stored credentials
 
 ---
 
@@ -189,8 +211,9 @@ MiniMax output.
 - Producing content in specific formats/styles
 - Code generation with MiniMax models
 - Summarization, translation, Q&A
+- Multi-turn conversations via `--messages-file`
 
-**Command:**
+**Command (single turn):**
 
 ```bash
 mmx text chat \
@@ -200,6 +223,30 @@ mmx text chat \
   --output json \
   --non-interactive
 ```
+
+**Command (multi-turn from JSON file):**
+
+```bash
+mmx text chat \
+  --messages-file conversation.json \
+  --model MiniMax-M2.7 \
+  --output json \
+  --non-interactive
+```
+
+`conversation.json` is a `[{role, content}, ...]` array. Pass `-` to read
+from stdin.
+
+**Useful additional flags:**
+
+| Flag | Purpose |
+|---|---|
+| `--stream` | Stream tokens as they're produced (default on in TTY) |
+| `--max-tokens <n>` | Cap generated length (default 4096) |
+| `--temperature <n>` | Sampling temperature in `(0.0, 1.0]` |
+| `--top-p <n>` | Nucleus sampling threshold |
+| `--tool <json-or-path>` | Tool definition as JSON or file path (repeatable) |
+| `--message <text>` (repeatable) | Multi-turn inline; prefix `assistant:` to set role |
 
 **Output field to extract:** `choices[0].message.content`
 
@@ -218,7 +265,10 @@ mmx text chat \
 
 **Available models:**
 - `MiniMax-M2.7` — Default, good balance of speed and quality
-- Check `mmx text models --output json --non-interactive` for the full list
+- `MiniMax-M2.7-highspeed` — Lower-latency variant; use when the user values
+  response time over quality
+
+API reference: https://platform.minimax.io/docs/api-reference/text-post
 
 ---
 
@@ -244,6 +294,9 @@ mmx file upload \
   --non-interactive
 ```
 
+> **Note:** the default `--purpose` is now `retrieval`. For vision/image
+> workflows, always pass `--purpose vision` explicitly (as shown above).
+
 **Output field to extract:** `file_id`
 
 ```json
@@ -257,6 +310,96 @@ mmx file upload \
 
 **After upload:** Use the returned `file_id` with `mmx vision describe --file-id`
 or in chat messages as a file reference.
+
+---
+
+## Other Available Resources
+
+Beyond the four tools documented above, `mmx` 1.0.16+ exposes additional
+resources. For each, run `mmx <resource> --help` to see the full flag set.
+
+### 5. `mmx_speech_synthesize` — Speech Synthesis
+
+Generate spoken audio from text.
+
+```bash
+mmx speech synthesize \
+  --text "<text to speak>" \
+  --voice "<voice-id>" \
+  --output <path-to-mp3> \
+  --non-interactive
+```
+
+List available voices with `mmx speech voices`.
+
+### 6. `mmx_image_generate` — Image Generation
+
+Create images from a text prompt.
+
+```bash
+mmx image generate \
+  --prompt "<image prompt>" \
+  --size 1024x1024 \
+  --output <path-to-png> \
+  --non-interactive
+```
+
+### 7. `mmx_video_generate` — Video Generation
+
+Create short videos from a prompt. Generation is async; the command returns
+a `task_id` you can poll with `mmx video task get`, then download with
+`mmx video download`.
+
+```bash
+mmx video generate \
+  --prompt "<video prompt>" \
+  --duration 4 \
+  --output json \
+  --non-interactive
+# → extract task_id
+mmx video task get --task-id <task_id> --output json --non-interactive
+mmx video download --task-id <task_id> --output <path.mp4>
+```
+
+### 8. `mmx_music_generate` — Music Generation
+
+Create music from a prompt, or generate a cover of an existing track.
+
+```bash
+mmx music generate \
+  --prompt "<style/lyrics prompt>" \
+  --duration 30 \
+  --output <path.mp3> \
+  --non-interactive
+```
+
+### 9. `mmx_quota_show` — Quota Inspection
+
+Check remaining usage before a large generation.
+
+```bash
+mmx quota show --output json --non-interactive
+```
+
+### 10. `mmx_config_*` — CLI Configuration
+
+Inspect or override CLI defaults. Useful when running in CI or a sandbox
+where the default region doesn't apply.
+
+```bash
+mmx config show --output json
+mmx config set region cn
+mmx config export-schema   # print JSON schema of the config file
+```
+
+### 11. `mmx_update` — Self-update
+
+Upgrade the CLI to the latest version. Prefer this over `pnpm add -g`
+since it preserves any registry config.
+
+```bash
+mmx update
+```
 
 ---
 
@@ -343,7 +486,9 @@ mmx text chat \
 | `search query` | `.organic[].title`, `.organic[].link`, `.organic[].snippet`, `.organic[].date` |
 | `text chat` | `.choices[0].message.content` |
 | `file upload` | `.file_id` |
-| `auth status` | `.authenticated` |
+| `auth status` | `.authenticated`, `.user.*`, `.quota.*` |
+| `quota show` | per-resource remaining/limit fields |
+| `video generate` | `.task_id` (poll with `video task get`) |
 
 **Parsing pattern (bash):**
 
@@ -366,7 +511,7 @@ echo "$OUTPUT" | jq -r '.organic[] | "**\(.title)**\n\(.link)\n\(.snippet)\n"'
 | Condition | Detection | Response |
 |---|---|---|
 | Not authenticated | `auth status` returns `{"authenticated": false}` or exit code ≠ 0 | Tell user: "Run `mmx auth login` first" |
-| `mmx` not found | `which mmx` returns empty / exit 127 | "mmx CLI not found. Install: `npm install -g @minimax/mmx`" |
+| `mmx` not found | `which mmx` returns empty / exit 127 | "mmx CLI not found. Install: `pnpm add -g @minimax/mmx` (or run `mmx update` if previously installed)" |
 | File not found | Exit code ≠ 0, stderr contains "not found" or "ENOENT" | "File not found: `<path>`. Check the path and try again." |
 | Unsupported image format | stderr contains "unsupported format" | "Unsupported format. Use PNG, JPG, JPEG, or WebP." |
 | Rate limit | HTTP 429 / stderr contains "rate limit" | "Rate limit reached. Wait a moment and retry." |
@@ -394,6 +539,6 @@ mmx auth status --output json --non-interactive
 
 5. **File upload is persistent**: Uploaded files remain in MiniMax storage. Reuse `file_id` values across multiple calls within a session to avoid redundant uploads.
 
-6. **Model selection for text chat**: `MiniMax-M2.7` is the default. For tasks requiring longer context or higher quality, check available models with `mmx text models`.
+6. **Model selection for text chat**: `MiniMax-M2.7` is the default; `MiniMax-M2.7-highspeed` is the low-latency variant. `mmx text models` was removed in 1.0.16 — model IDs above are the current set.
 
 7. **Combining tools**: The most powerful workflows combine search (for current data) + text chat (for synthesis) + vision (for image context) in sequence.

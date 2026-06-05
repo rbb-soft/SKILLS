@@ -5,6 +5,34 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
 
 ---
 
+## [v0.8.0] — 2026-06-05
+
+### Added
+- Skill `minimax-helper` registrado en `.skill-lock.json` con `source: local`
+  (el skill existía en `skills/minimax-helper/` pero no figuraba en el manifest)
+- Documentación de nuevos recursos del CLI `mmx` 1.0.16 en `SKILL.md`:
+  `speech synthesize`, `image generate`, `video generate`, `music generate`,
+  `quota show`, `config show/set/export-schema`, `update`
+- Sección "Other Available Resources" en `SKILL.md` con quick-reference de los
+  recursos nuevos
+
+### Changed
+- `SKILL.md` (minimax-helper) actualizado para `mmx` 1.0.16: bumped reference
+  de `v1.0.15+` a `v1.0.16+`; instrucciones de install ahora son pnpm-primary;
+  `auth status` documenta el quota snapshot; `text chat` documenta los flags
+  nuevos (`--stream`, `--messages-file`, `--max-tokens`, `--temperature`,
+  `--top-p`, `--tool`); se documenta el modelo `MiniMax-M2.7-highspeed`
+- Frontmatter `description:` de `minimax-helper` ampliada para reflejar las
+  capacidades nuevas (speech, image/video/music, quota, update)
+- Error Handling: comando de install cambiado de `npm install -g @minimax/mmx`
+  a `pnpm add -g @minimax/mmx` (coincide con la instalación real; `npm` no
+  resuelve el paquete en el registry público)
+
+### Removed
+- Referencia rota a `mmx text models` (el comando fue eliminado en 1.0.16)
+
+---
+
 ## [v0.7.0] — 2026-06-01
 
 ### Added

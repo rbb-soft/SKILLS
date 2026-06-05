@@ -83,6 +83,15 @@
       "skillFolderHash": "a9e1372465393214557768f2ca1dccf2c8d2fa36",
       "installedAt": "2026-06-01T13:00:53.799Z",
       "updatedAt": "2026-06-01T13:00:53.799Z"
+    },
+    "minimax-helper": {
+      "source": "local",
+      "sourceType": "local",
+      "sourceUrl": null,
+      "skillPath": "skills/minimax-helper/SKILL.md",
+      "skillFolderHash": "09cedb759cb8d035ceefcb670c500210d9f3602d",
+      "installedAt": "2026-05-31T11:43:00.000Z",
+      "updatedAt": "2026-06-05T00:33:00.000Z"
     }
   },
   "dismissed": {

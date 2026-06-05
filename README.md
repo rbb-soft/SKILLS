@@ -37,4 +37,4 @@ Los skills se instalan via el comando `/skills` o creando manualmente un subdire
 
 ## Versión
 
-v0.7.0
+v0.8.0
